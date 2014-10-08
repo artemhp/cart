@@ -1,0 +1,24 @@
+.pseudoTable {
+	display: table;
+	width: 100%;
+}
+
+.pseudoThead,
+.pseudoTfooter,
+.pseudoTr {
+	display: table-row;
+}
+
+.pseudoTr {
+	&:nth-child(2n) {
+		background: #dddddd;
+	}
+}
+
+.pseudoTd,
+.pseudoTh {
+	display: table-cell;
+	vertical-align: middle;
+	float: none;
+	position: static;
+}

@@ -1,0 +1,55 @@
+- items = [{:ids => "1001", :price => "1.99", :value => "1", :title => "Cotton T-Shirt, Medium"}, {:ids => "1002", :price => "2.99", :value => "1", :title => "Baseball Cap, One Size"}, {:ids => "1003", :price => "3.99", :value => "1", :title => "Swim Shorts, Medium"}]
+
+!!! 5
+%html.no-js(lang="en")
+  %head
+    %meta(charset="utf-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %title AKQA Cart
+    %link(rel="stylesheet" href="./css/index.css")
+    %link(rel="shortcut icon" href="./favicon.ico")
+  %body
+    %div.container
+      %header.header
+        %a.logo AKQA
+      %section.cartDescription
+        %h1.mainTitle Your Basket
+        %p.cartInfo Items you have added to your basket are shown below. Adjust the quantities or remove items before continuing your purchase.
+      %section.cart
+        %form.cartForm#cartForm{:action => ""}
+
+          %div.cartHeader.row
+            %div.col-xs-3
+              Product
+            %div.col-xs-1
+              Price
+            %div.col-xs-1
+              Qty
+            %div.col-xs-1
+              Cost
+          %div.pseudoTable.cartTable.row
+            - items.each do |item|
+              %div.pseudoTr.item{:id => "item-#{item[:ids]}"}
+                %div.pseudoTd.cartTitle.col-xs-3
+                  %div.trash
+                  #{item[:title]}
+                %div.pseudoTd.pound.col-xs-1 #{item[:price]}
+                %div.pseudoTd.cartCount.col-xs-1
+                  %input{:type => "number", :value=> "1", :name => "qty", :class => "priceQty"}
+                  %div.qtyUp
+                  %div.qtyDown
+                %div.pseudoTd.pound.col-xs-1
+          %div.row.cartInfoWrap
+            %div.cartTotalInfo.col-xs-3
+              %div.subtotal Subtotal
+              %div.tax VAT @20%
+              %div.total Total Cost
+            %div.cartTotalResult.col-xs-3
+              %div#subtotal.pound
+              %div#tax.pound
+              %div#total.pound
+          %div.row
+            %div.cartBtn
+              %input{:type => "submit", :name => "cartBtn", :id => "cartBtn", :value => "Buy Now »"}
+
+  %script(src="./js/scripts.min.js")

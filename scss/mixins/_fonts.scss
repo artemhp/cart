@@ -1,0 +1,26 @@
+// Custom Form Include:
+// $fontName Font Name
+// $fileName1 Path to Regular
+// $fileName2 Path to Bold
+// $fileName3 Path to Italic
+// $fileName4 Path to Bold and Italic
+
+// @include customFont("Museo", "Museo-l", "Museo-b", "Museo-ri-", "Museo-bi-", "../fonts/Museo/");
+
+@mixin customFont($fontName, $fileName1, $fileName2: false, $fileName3: false, $fileName4: false, $path: "../fonts/") {
+	$fontWeight: "normal", "bold", "normal", "bold";
+	$fontStyle: "normal", "normal", "italic", "italic";
+	$i: 1;
+	@each $fileName in $fileName1, $fileName2, $fileName3, $fileName4 {
+		@if $fileName != false {
+			@font-face {
+				font-weight: unquote(nth($fontWeight, $i));
+				font-style: unquote(nth($fontStyle, $i));
+				font-family: $fontName;
+				src: url($path + $fileName + '.eot');
+				src: url($path + $fileName + '.eot?#iefix') format('embedded-opentype'), url($path + $fileName + '.woff') format('woff'), url($path + $fileName + '.ttf') format('truetype'), url($path + $fileName + '.svg#' + $fileName) format('svg');
+			}
+		}
+		$i: $i+1;
+	}
+}

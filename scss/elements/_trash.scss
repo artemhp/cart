@@ -1,0 +1,53 @@
+// TrashIcon
+
+.trash {
+	$color: #000066;
+	position: relative;
+	width: em(14px);
+	height: em(17px);
+	margin-top: em(4px);
+
+	cursor: pointer;
+	border: em(2px) solid $color;
+	border-bottom-left-radius: em(2px);
+	border-bottom-right-radius: em(2px);
+	box-shadow: em(2px) 0 0 0 #fff inset, em(4px) 0 0 0 $color inset, em(6px) 0 0 0 #fff inset, em(8px) 0 0 0 $color inset;
+
+	&:after {
+		display: block;
+		position: absolute;
+		top: em(-9px);
+		left: 50%;
+		margin-left: em(-2px);
+
+		height: em(2px);
+		width: em(4px);
+
+		background: $color;
+		content: "";
+	}
+
+	&:before {
+		display: block;
+		position: absolute;
+		left: 50%;
+		top: em(-6px);
+		margin-left: em(-8px);
+
+		height: em(3px);
+		width: em(16px);
+
+		background: $color;
+		content: "";
+		border-top-left-radius: em(2px);
+		border-top-right-radius: em(2px);
+	}
+	&:hover {
+		&:before {
+			top: em(-7px);
+		}
+		&:after {
+			top: em(-10px);
+		}
+	}
+}

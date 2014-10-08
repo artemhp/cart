@@ -1,0 +1,9 @@
+{
+  "name": "ArtemHP-Theme",
+  "version": "0.0.1",
+  "private": "true",
+  "dependencies": {
+    "foundation": "zurb/bower-foundation",
+	  "angular": "1.2.16"
+  }
+}

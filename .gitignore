@@ -1,0 +1,9 @@
+public/components/*
+build/*
+node_modules/*
+.sass-cache/*
+*.tmp/*
+./*.html
+theme/*
+*.DS_Store
+.idea/

@@ -1,0 +1,3 @@
+@function em($t, $c: 16px) {
+	@return $t / $c * 1em;
+}
