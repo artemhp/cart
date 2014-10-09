@@ -2,6 +2,16 @@
 
 .trash {
 	$color: #000066;
+	$colorHover: #5353fb;
+
+	&:hover {
+		border: em(2px) solid $colorHover;
+		box-shadow: em(2px) 0 0 0 #fff inset, em(4px) 0 0 0 $colorHover inset, em(6px) 0 0 0 #fff inset, em(8px) 0 0 0 $colorHover inset;
+		&:after, &:before {
+			background: $colorHover;
+		}
+	}
+
 	position: relative;
 	width: em(14px);
 	height: em(17px);

@@ -1,5 +1,6 @@
 @import "mixins/fonts";
 @import "mixins/em";
+@import "mixins/animation";
 @import "lib/normalizer";
 @import "lib/grid";
 @import "elements/tables";
@@ -7,7 +8,9 @@
 
 $bgColor: #f0f0f0;
 $qtyBg: #999;
+$breakPoint: 768px;
 
+// Change Box Model
 html {
 	box-sizing: border-box;
 }
@@ -16,26 +19,32 @@ html {
 	box-sizing: inherit;
 }
 
+// Include Custom Fonts
 @include customFont("Droid Serif", "droidserif-webfont", "droidserif-bold-webfont", false, false, "../fonts/Droid_Serif/");
-@include customFont("Droid Sans", "droidsans-bold-webfont", "droidsans-bold-webfont", false, false, "../fonts/Droid_Sans/");
-
-.container {
-	padding-top: em(130px);
-}
-
-.cartTable {
-	width: 500px;
-	margin-bottom: em(50px);
-}
+@include customFont("Droid Sans", "droidsans-webfont", "droidsans-bold-webfont", false, false, "../fonts/Droid_Sans/");
 
 body {
 	font-family: "Droid Serif";
 	background-color: $bgColor;
 }
 
+// Header
+// ---------------------------------------------
+
+.header {
+	margin-bottom: em(68px);
+	padding-top: em(130px);
+	@media screen and (max-width: $breakPoint) {
+		margin-bottom: 0;
+		padding-top: em(20px);
+	}
+}
+
 .mainTitle {
 	font-size: em(30px);
 	text-shadow: 2px 1px 2px rgba(0, 0, 0, 0.2);
+	margin-bottom: em(5px);
+	line-height: 1.3;
 }
 
 .logo {
@@ -50,48 +59,107 @@ body {
 	width: em(100px);
 }
 
-.header {
-	margin-bottom: em(75px);
+.cartInfo {
+	font-size: em(14px);
+	margin-bottom: em(55px, 14px);
+	line-height: 1.5;
+	padding-top: 0;
+	margin-top: 0;
+	@media screen and (max-width: $breakPoint) {
+		margin-bottom: em(20px, 14px);
+	}
 }
 
-.hidden {
-	display: none !important;
-}
+// Cart
+// -----------------------------------------------------
 
-.remove {
-	opacity: 0.3;
-}
-
-.item {
-	position: relative;
-	.pseudoTd {
-		padding-bottom: em(9px);
-		padding-top: em(9px);
+.cartTable {
+	margin-bottom: em(36px);
+	text-align: right;
+	@media screen and (max-width: $breakPoint) {
+		text-align: left;
 	}
 }
 
 .trash {
 	position: absolute;
-	font-size: 16px;
+	font-size: em(16px, 18px);
 	right: em(-30px);
-}
-
-.cartTable {
-	position: relative;
-}
-
-.pound {
-	text-align: right;
-	&:before {
-		content: "\00a3";
+	@media screen and (max-width: $breakPoint) {
+		position: relative;
+		right: auto;
+		float: right;
+		margin-top: em(5px, 18px);
 	}
 }
 
 .priceQty {
-	width: em(44px, 18px);
+	width: em(42px, 18px);
 	height: em(28px, 18px);
-	text-align: right;
 	float: left;
+	border: 1px solid #999;
+	text-align: right;
+	@media screen and (max-width: $breakPoint) {
+		text-align: center;
+	}
+}
+
+.cartTitle {
+	text-align: left;
+	@media screen and (max-width: $breakPoint) {
+		padding-bottom: 0.4em;
+	}
+}
+
+.item {
+	@media screen and (max-width: $breakPoint) {
+		padding-top: 10px;
+		padding-bottom: 10px;
+		margin-left: 0;
+		margin-right: 0;
+		padding-left: 55px;
+		padding-right: 10px;
+		position: relative;
+	}
+}
+
+.itemCost {
+	@media screen and (max-width: $breakPoint) {
+		font-weight: bold;
+		&:after {
+			content: "Total Cost: ";
+			float: left;
+			margin-right: 10px;
+		}
+	}
+}
+
+/// Arrows for controlling value
+
+.cart {
+	font-size: em(18px);
+}
+
+.cartCount {
+	width: em(82px, 18px);
+	@media screen and (max-width: $breakPoint) {
+		position: static;
+	}
+}
+
+.cartHeader {
+	@media screen and (max-width: $breakPoint) {
+		display: none;
+	}
+	border-bottom: em(2px, 18px) $qtyBg solid;
+	margin-bottom: em(10px, 18px);
+	font-weight: bold;
+	> div:nth-child(even) {
+		text-align: right;
+	}
+	> div:nth-child(3) {
+
+	}
 }
 
 %qtyShape {
@@ -102,100 +170,178 @@ body {
 	width: em(16px, 18px);
 	overflow: hidden;
 	cursor: pointer;
-	// No Select
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+	@include user-select-disable();
 	color: #fff;
 	text-align: center;
 	line-height: 100%;
-}
-
-.qtyUp {
+	&:hover {
+		background: darken($qtyBg, 15%);
+	}
 	&:before {
-		content: "+";
 		font-size: em(16px, 18px);
 		display: block;
 		position: absolute;
 		left: 0;
 		right: 0;
 		height: em(10px, 18px);
-		top: em(-2px);
 		text-align: center;
+	}
+}
+
+.wrapQty {
+	width: em(62px, 18px);
+	height: em(30px, 18px);
+}
+
+.qtyUp {
+
+	@media screen and (max-width: $breakPoint) {
+		position: absolute;
+		font-size: em(50px, 18px);
+		left: em(10px, 50px);
+		top: em(10px, 50px);
+	}
+
+	&:before {
+		content: "+";
+		top: em(-2px);
 	}
 	@extend %qtyShape;
 	margin-bottom: 1px;
 }
 
 .qtyDown {
+	@media screen and (max-width: $breakPoint) {
+		position: absolute;
+		font-size: em(50px, 18px);
+		left: em(10px, 50px);
+		bottom: em(10px, 50px);
+	}
+
 	&:before {
 		content: "-";
-		font-size: em(16px, 18px);
-		display: block;
-		position: absolute;
-		left: 0;
-		right: 0;
-		height: em(10px, 18px);
 		top: em(-3px);
-		text-align: center;
 	}
 	@extend %qtyShape;
 	margin-top: 1px;
 }
 
-.cartHeader {
-	border-bottom: em(2px, 18px) $qtyBg solid;
-	margin-bottom: em(20px, 18px);
-	font-weight: bold;
-}
-
-.cartInfo {
-	font-size: em(14px);
-	margin-bottom: em(60px, 14px);
-	line-height: 1.5;
-}
-
 .cartTotalResult {
-
+	text-align: right;
 }
 
-.cart {
-	font-size: em(18px);
-}
-
-.cartTotalInfo,
-.cartTotalResult {
+// Total Information
+.cartInfoWrap {
+	margin-bottom: em(47px, 18px);
 	color: #666666;
-	> div:last-child {
-		margin-top: em(30px, 18px);
-		font-weight: bold;
-		color: #000;
+}
+
+.cartTotalBottom {
+	margin-top: em(30px, 18px);
+	font-weight: bold;
+	color: #000;
+}
+
+// Button Submit
+
+.cartBtnWrap {
+	text-align: right;
+	margin-bottom: 2em;
+	@media screen and (max-width: $breakPoint) {
+		text-align: center;
 	}
 }
 
 .cartBtn {
-	text-align: right;
-	> input {
-		margin: 0;
-		padding-left: em(4px);
-		padding-right: em(4px);
-		border: none;
-		display: inline-block;
-		font-family: "Droid Sans";
-		color: #fff;
-		background-color: #000066;
-		font-size: em(24px, 18px);
-		padding-top: em(8px, 18px);
-		padding-bottom: em(8px, 18px);
-		border-radius: em(5px, 18px);
-		box-shadow: 1px 5px 5px #666;
+	@media screen and (max-width: $breakPoint) {
+		width: 80%;
+	}
+	&:hover {
+		background-color: #3333ff;
+	}
+	margin: 0;
+	padding: em(8px, 18px) em(4px);
+	border: none;
+	font-weight: bold;
+	display: inline-block;
+	font-family: "Droid Sans";
+	color: #fff;
+	background-color: #000066;
+	font-size: em(24px, 18px);
+	border-radius: em(8px, 18px);
+	box-shadow: 1px 5px 5px #666;
+	-webkit-transition: background-color 0.314s linear;
+	-moz-transition: background-color 0.314s linear;
+	-ms-transition: background-color 0.314s linear;
+	transition: background-color 0.314s linear;
+}
+
+// Footer
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	margin: 0 0 em(39px); /* bottom = footer height */
+}
+
+.footer {
+	background: #666666;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	font-size: em(12px);
+	height: em(39px, 12px);
+	width: 100%;
+	font-family: "Droid Sans";
+	line-height: em(39px, 12px);
+	color: #fff;
+	@media screen and (max-width: $breakPoint) {
+		text-align: center;
 	}
 }
 
-.cartInfoWrap {
-	margin-bottom: em(55px, 18px);
+// Depends on Content
+// -----------------------------------------------------
+
+.pound {
+	&:before {
+		content: "\00a3";
+	}
+}
+
+// Options
+// -----------------------------------------------------
+
+.hidden {
+	display: none !important;
+}
+
+.remove {
+	opacity: 0;
+	@include animation(removeItem 0.5s);
+}
+
+@include keyframes(removeItem) {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+// Hacks
+// ----------------------------------------------------
+
+// Disable arrows in inputs
+input[type=number] {
+	-webkit-appearance: none;
+	-moz-appearance: textfield;
+	margin: 0;
+
 }
 
 input[type=number]::-webkit-inner-spin-button,

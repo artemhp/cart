@@ -33,7 +33,7 @@ function Cart(name) {
 	this.recalculate = function () {
 		var targetQty = getElementsByClassName(document, "priceQty");
 		for (var ii = 0; ii < targetQty.length; ii++) {
-			var getId = findId(targetQty[ii].parentNode.parentNode);
+			var getId = findId(targetQty[ii].parentNode.parentNode.parentNode);
 			cart.calculateCart(getId, targetQty[ii].value);
 		}
 	};
@@ -63,7 +63,7 @@ function Cart(name) {
 	this.controlValue = function (elem, action) {
 		var current = elem.parentNode.childNodes[0]; // Chrome - 1
 		var qtyVal = parseInt(current.value);
-		var getId = current.parentNode.parentNode;
+		var getId = current.parentNode.parentNode.parentNode;
 		if (action == "minus") {
 			if (qtyVal > 1) {
 				current.value = --qtyVal;
@@ -78,12 +78,13 @@ function Cart(name) {
 
 	this.deleteItem = function (target) {
 		var getItem = target.parentNode.parentNode;
-		getItem.setAttribute("class", "pseudoTr item remove");
+		getItem.setAttribute("class", "pseudoTr row item remove");
 		delete this.data.items[findId(getItem)];
+		var that = this;
 		setTimeout(function () {
 			getItem.parentNode.removeChild(getItem);
-		}, 1000);
-		this.recalculate();
+			that.recalculate();
+		}, 800);
 	};
 }
 
@@ -127,17 +128,20 @@ for (var minusIteration = 0; minusIteration < targetMinus.length; minusIteration
 }
 
 for (var onChangeIteration = 0; onChangeIteration < targetQty.length; onChangeIteration++) {
-	var getId = findId(targetQty[onChangeIteration].parentNode.parentNode);
+	var getId = findId(targetQty[onChangeIteration].parentNode.parentNode.parentNode);
 	cart.calculateCart(getId, targetQty[onChangeIteration].value);
 	if (targetQty[onChangeIteration].addEventListener) {
 		targetQty[onChangeIteration].addEventListener('change', function (elem) {
-			cart.calculateCart(findId(targetQty[onChangeIteration].parentNode.parentNode), elem.target.value);
+			window.testMe = elem.target.value;
+			elem.target.value = parseFloat(elem.target.value);
+			if (elem.target.value == "") {elem.target.value = 0}
+			cart.calculateCart(findId(elem.target.parentNode.parentNode.parentNode), elem.target.value);
 		}, false);
 	} else {
 		function handleChangeValue(e) {
 			var event = e || window.event;
 			var target = event.target || event.srcElement;
-			cart.calculateCart(findId(target.parentNode.parentNode), target.value);
+			cart.calculateCart(findId(target.parentNode.parentNode.parentNode), target.value);
 		}
 
 		targetQty[onChangeIteration].attachEvent("onkeyup", handleChangeValue);
@@ -191,7 +195,4 @@ if (document.getElementById("cartForm").addEventListener) {
 		request.send(JSON.stringify(cart.data));
 
 	}
-
 }
-
-//document.getElementById("cartForm");

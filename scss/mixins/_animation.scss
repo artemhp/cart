@@ -1,0 +1,17 @@
+@mixin keyframes($anim) {
+	@-webkit-keyframes #{$anim} {
+		@content;
+	}
+	@-moz-keyframes #{$anim} {
+		@content;
+	}
+	@keyframes #{$anim} {
+		@content;
+	}
+}
+
+@mixin animation ($anim) {
+	-moz-animation: $anim;
+	-webkit-animation: $anim;
+	animation: $anim;
+}

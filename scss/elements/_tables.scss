@@ -1,17 +1,33 @@
+$breakPoint: 768px;
+
 .pseudoTable {
-	display: table;
-	width: 100%;
+	@media screen and (min-width: $breakPoint) {
+		display: table;
+		width: 500px;
+	}
+	position: relative;
 }
 
 .pseudoThead,
 .pseudoTfooter,
 .pseudoTr {
 	display: table-row;
+	@media screen and (max-width: $breakPoint) {
+		display: block;
+	}
 }
 
 .pseudoTr {
 	&:nth-child(2n) {
 		background: #dddddd;
+	}
+	@media screen and (max-width: $breakPoint) {
+		&:nth-child(2n + 1) {
+			background: #dddddd;
+		}
+		&:nth-child(2n) {
+			background: none;
+		}
 	}
 }
 
@@ -21,4 +37,13 @@
 	vertical-align: middle;
 	float: none;
 	position: static;
+	padding-bottom: em(9px);
+	padding-top: em(9px);
+	@media screen and (max-width: $breakPoint) {
+		display: block;
+		position: relative;
+		float: left;
+		padding-bottom: inherit;
+		padding-top: inherit;
+	}
 }
