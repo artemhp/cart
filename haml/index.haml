@@ -15,8 +15,8 @@
       %section.cartDescription
         %h1.mainTitle Your Basket
         %p.cartInfo Items you have added to your basket are shown below. Adjust the quantities or remove items before continuing your purchase.
-      %section.cart
-        %form.cartForm#cartForm{:action => ""}
+      %div.cart
+        %form.cartForm#cartForm{:action => "index.php"}
 
           %div.cartHeader.row
             %div.col-xs-3.col-md-3
@@ -54,9 +54,8 @@
               %input.cartBtn{:type => "submit", :name => "cartBtn", :id => "cartBtn", :value => "Buy Now »"}
     %footer.footer
       %div.container
-        &copy
+        &copy;
         %strong
           2013 AKQA Ltd.
         Registered in England: 2964394
-
-  %script(src="./js/scripts.js")
+    %script(src="./js/scripts.min.js")

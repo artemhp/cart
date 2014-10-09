@@ -131,7 +131,7 @@ for (var onChangeIteration = 0; onChangeIteration < targetQty.length; onChangeIt
 	var getId = findId(targetQty[onChangeIteration].parentNode.parentNode.parentNode);
 	cart.calculateCart(getId, targetQty[onChangeIteration].value);
 	if (targetQty[onChangeIteration].addEventListener) {
-		targetQty[onChangeIteration].addEventListener('change', function (elem) {
+		targetQty[onChangeIteration].addEventListener('keyup', function (elem) {
 			window.testMe = elem.target.value;
 			elem.target.value = parseFloat(elem.target.value);
 			if (elem.target.value == "") {elem.target.value = 0}
@@ -190,7 +190,7 @@ if (document.getElementById("cartForm").addEventListener) {
 		alert(JSON.stringify(cart.data));
 
 		var request= new XMLHttpRequest();
-		request.open("POST", "index.php", true);
+		request.open("POST", document.getElementById("cartForm").action, true);
 		request.setRequestHeader("Content-type", "application/json");
 		request.send(JSON.stringify(cart.data));
 
